@@ -1,0 +1,19 @@
+{% extends "base.html" %}
+{% import "bootstrap/wtf.html" as wtf %}
+
+{% block page_content %}
+<h1>Register</h1>
+<P>Before you submit this form, please ensure you have any otp app installed on your smartphone or you can use our
+    custom otp generator , as you will need it to complete your registration.</P>
+<br>
+<p>Can use any otp generator you want, forexample Google Authenticator 
+    <a href="https://apps.apple.com/us/app/google-authenticator/id388497605">iTunes</a>
+    | <a href="https://play.google.com/store/apps/details?id=com.google.android.apps.authenticator2">Google Play</a></p>
+<p>Or simple way use our otp generator script  explanation how tou use on github repo. </p>
+<a href="https://github.com/nto4/TotpOtpGenerator">Custom OTPGenerator</a></p>
+{{ wtf.quick_form(form) }}
+<br>
+<div class="alert alert-danger" role="alert">Note: The next page will show your secret code as QR code . Make sure
+    nobody can see your
+    screen before pressing the Register button.</div>
+{% endblock %}
