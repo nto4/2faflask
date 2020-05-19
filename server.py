@@ -31,7 +31,7 @@ class User(UserMixin, db.Model):
     username = db.Column(db.String(64), index=True)
     password_hash = db.Column(db.String(128))
     otp_secret = db.Column(db.String(16))
-    # Definition Created Secret Key
+    #  Created Secret Key
     def __init__(self, **kwargs):
         super(User, self).__init__(**kwargs)
         if self.otp_secret is None:
@@ -54,17 +54,18 @@ class User(UserMixin, db.Model):
             .format(self.username, self.otp_secret)
 
     def verify_totp(self, token):
+        # vierfy userinput and secret TOTP 
         return onetimepass.valid_totp(token, self.otp_secret)
 
 
 @lm.user_loader
 def load_user(user_id):
-    """User loader callback for Flask-Login."""
+    # User loader callback for Flask-Login
     return User.query.get(int(user_id))
 
 
 class RegisterForm(FlaskForm):
-    """Registration form."""
+    # Registration form
     username = StringField('Username', validators=[Required(), Length(1, 64)])
     password = PasswordField('Password', validators=[Required()])
     password_again = PasswordField('Password again',
@@ -73,7 +74,7 @@ class RegisterForm(FlaskForm):
 
 
 class LoginForm(FlaskForm):
-    """Login form."""
+    # Login form
     username = StringField('Username', validators=[Required(), Length(1, 64)])
     password = PasswordField('Password', validators=[Required()])
     token = StringField('Token', validators=[Required(), Length(6, 6)])
@@ -175,6 +176,6 @@ def logout():
 # Create DB if not exist
 db.create_all()
 
-# Keep debug true for unsecure modules and unsecure implamentation(not https, some modules is leagacy and include vulnerability)
+# Keep debug true for development,run  rebuild and run server every changes code 
 if __name__ == '__main__':
     app.run(host='0.0.0.0', debug=True)
